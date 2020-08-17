@@ -41,6 +41,11 @@ const validate = {
                 date: Joi.date(),
             })
         }),
+        expression: celebrate({
+            [Segments.PARAMS]: Joi.object().keys({
+                word: Joi.string(),
+            })
+        }),
         delete: celebrate({
             [Segments.PARAMS]: Joi.object().keys({
                 id: Joi.number().required(),
@@ -52,6 +57,7 @@ const validate = {
 routes.get('/pajubas', validate.pajuba.index, PajubaController.index);
 routes.get('/pajubas/random', PajubaController.getRandom);
 routes.get('/pajubas/wordOfDay',validate.pajuba.wordOfDay, PajubaController.wordOfDay);
+routes.get('/pajubas/expression/:word',validate.pajuba.expression, PajubaController.getExpression);
 routes.get('/pajubas/:id', validate.pajuba.get, PajubaController.get);
 routes.patch('/pajubas/:id', validate.pajuba.patch, PajubaController.patch);
 routes.post('/pajubas',validate.pajuba.create, PajubaController.create);

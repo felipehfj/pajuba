@@ -41,6 +41,26 @@ module.exports = {
         }
     },
 
+    async getExpression(request, response) {
+        try {
+            const { word } = request.params;
+            console.log(word);
+            const pajuba = await connection('Pajuba')
+                .where('expression', word)
+                .select('*')
+                .first()
+
+            if (pajuba) {
+                return response.json(pajuba);
+            } else {
+                return response.status(404).send()
+            }
+        }
+        catch (err) {
+            return response.status(400).json({ error: `${err}` });
+        }
+    },
+
     async getRandom(request, response) {
         try {
             const pajuba = await connection('Pajuba')
